@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<link href="/iTrust/css/obstetricsReport.css" rel="stylesheet" />
+
+<div id="pregnancy-report-content">
+	<div align="center">
+		<br />
+		<h2 style="font-size: 175%; font-weight: bold;">Prior Pregnancy Record</h2>
+		<br />
+	</div>
+
+	<div align="center">
+
+		<!--<c:set var="record"-->
+			<!--value="#{ emergency_record_controller.loadRecord(sessionScope['pid']) }" />-->
+
+		<!--<c:choose>-->
+			<!--<c:when test="${!empty record}">-->
+
+				<h:panelGrid columns="2" id="basicInfo" styleClass="fTable"
+					border="1">
+					<f:facet name="header">
+						<h:outputText value="General" />
+					</f:facet>
+
+					<h:outputLabel value="Conception Year" />
+					<h:outputText value="#{pregnancy_controller.getSelectedPregnancy().conceptionYear}" />
+
+					<h:outputLabel value="Weeks Pregnant" />
+					<h:outputText value="#{pregnancy_controller.getSelectedPregnancy().weeksPregnant}" />
+
+                    <h:outputLabel value="Hours In Labor" />
+                    <h:outputText value="#{pregnancy_controller.getSelectedPregnancy().laborHours}" />
+
+					<h:outputLabel value="Weight Gained During Pregnancy" />
+					<h:outputText value="#{pregnancy_controller.getSelectedPregnancy().weightGain}" />
+
+                    <h:outputLabel value="Delivery Type" />
+                    <h:outputText value="#{pregnancy_controller.getSelectedPregnancy().deliveryType}"/>
+
+					<h:outputLabel value="Number of Children" />
+					<h:outputText value="#{pregnancy_controller.getSelectedPregnancy().numberOfChildren}" />
+
+				</h:panelGrid>
+				<br />
+
+			<!--</c:when>-->
+			<!--<c:otherwise>-->
+				<!--No Emergency Record For This Patient-->
+			<!--</c:otherwise>-->
+		<!--</c:choose>-->
+	</div>
+</div>
+</html>

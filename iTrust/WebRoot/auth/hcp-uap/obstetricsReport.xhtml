@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<link href="/iTrust/css/obstetricsReport.css" rel="stylesheet" />
+
+<div id="obstetrics-report-content">
+	<div align="center">
+		<br />
+		<h2 style="font-size: 175%; font-weight: bold;">Obstetrics Initialization Record</h2>
+		<br />
+	</div>
+
+	<div align="center">
+
+				<h:panelGrid columns="2" id="basicInfo" styleClass="fTable"
+					border="1">
+					<f:facet name="header">
+						<h:outputText value="General" />
+					</f:facet>
+
+					<h:outputLabel value="Date" />
+					<h:outputText value="#{obstetric_visit_controller.getSelectedVisit().date}">
+                        <f:converter converterId="localDateTimeConverter" />
+                    </h:outputText>
+
+					<h:outputLabel value="Location" />
+					<h:outputText value="#{obstetric_visit_controller.getSelectedVisit().locationID}" />
+
+                    <h:outputLabel value="Last Menstrual Period" />
+                    <h:outputText value="#{obstetric_visit_controller.getSelectedVisit().LMP}">
+                        <f:converter converterId="localDateTimeConverter" />
+                    </h:outputText>
+
+					<h:outputLabel value="Weeks Pregnant" />
+					<h:outputText value="#{obstetric_visit_controller.getSelectedVisit().weeksPregnant}" />
+
+                    <h:outputLabel value="Estimated Due Date" />
+                    <h:outputText value="#{obstetric_visit_controller.getSelectedVisit().EDD}">
+                        <f:converter converterId="localDateTimeConverter" />
+                    </h:outputText>
+
+					<h:outputLabel value="Notes" />
+					<h:outputText value="#{obstetric_visit_controller.getSelectedVisit().notes}" />
+
+				</h:panelGrid>
+				<br />
+
+	</div>
+</div>
+</html>

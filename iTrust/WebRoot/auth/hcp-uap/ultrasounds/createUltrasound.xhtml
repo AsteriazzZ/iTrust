@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view beforePhase="#{navigation_controller.redirectIfInvalidPatient()}" />
+<!--<f:view contentType="multipart/form-data"/>-->
+<f:metadata>
+    <!--<f:event type="preRenderView" listener="#{lab_procedure_controller.logViewLabProcedure()}"/>-->
+    <!--<f:event type="preRenderView" listener="#{office_visit_controller.logViewOfficeVisit()}"/>-->
+</f:metadata>
+<h:body>
+	<ui:composition template="/iTrust_template.xhtml">
+		<ui:define name="pageStyle">
+			<link rel="stylesheet" href="/iTrust/css/officevisitinfo.css" />
+			<link rel="stylesheet" href="/iTrust/css/form-layout.css" />
+			<link rel="stylesheet" href="/iTrust/css/tab-layout.css" />
+		</ui:define>
+		<ui:define name="pageTitle">Add Ultrasound</ui:define>
+		<ui:define name="leftMenu">
+			<ui:include src="/auth/hcp/menu.xhtml" />
+		</ui:define>
+		<ui:define name="mainContent">
+			<h:message for="" id="officevisitinfo-message" class="iTrustError" />
+			<h3>Add an Ultrasound</h3>
+			<div class="tab-group">
+				<input id="tab-general" type="radio" name="ovtabs" checked="checked" />
+				<label for="tab-general">General Information</label>
+				<div class="tab-content">
+					<div class="tab-panel" id="content-general">
+						<ui:include src="/auth/hcp-uap/ultrasounds/ultrasoundForm.xhtml"></ui:include>
+					</div>
+				</div>
+			</div>
+
+		</ui:define>
+
+		<ui:define name="pageScripts">
+			<script src="/iTrust/js/officevisitinfo.js"></script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

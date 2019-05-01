@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:itrust="/WEB-INF/tags.tld">
+
+
+<h:body>
+    <ui:composition template="/iTrust_template.xhtml">
+        <ui:define name="pageStyle">
+            <link rel="stylesheet" href="../css/visualize.css" />
+        </ui:define>
+
+        <ui:define name="pageTitle">iTrust - Visualize My Records</ui:define>
+        <ui:define name="leftMenu">
+            <ui:include src="/auth/patient/menu.jsp" />
+        </ui:define>
+        <ui:define name="mainContent">
+            <itrust:patientNav thisTitle="Visualize" />
+            <div align="center">
+                <br />
+                <h:message for="" />
+            </div>
+            <div id="viz"/>
+            <div id="return">
+                <a href="javascript: history.go(-1)">Go back</a>
+            </div>
+            <script type="text/javascript" src="https://d3js.org/d3.v3.min.js"/>
+            <script type="text/javascript">
+                function get_URL_param(key) {
+                    let url = new URL(window.location.href);
+                    return url.searchParams.get(key);
+                }
+                function get_data(source) {
+                    switch (source) {
+                        case "baby":
+                            raw_resp = `"#{office_visit_controller.getBabyOfficeVisitsForCurrentPatientJSON()}"}`;
+                            break;
+                        case "child":
+                            raw_resp = `"#{office_visit_controller.getChildOfficeVisitsForCurrentPatientJSON()}"}`;
+                            break;
+                        case "adult":
+                            raw_resp = `"#{office_visit_controller.getAdultOfficeVisitsForCurrentPatientJSON()}"}`;
+                            break;
+                        default:
+                            raw_resp = "";
+                    }
+                    let data =  JSON.parse(raw_resp.substr(1, raw_resp.length-3));
+                    return data;
+                }
+                function graph(data, col) {
+                    var	margin = {top: 30, right: 20, bottom: 30, left: 50},
+                        width = 600 - margin.left - margin.right,
+                        height = 270 - margin.top - margin.bottom;
+                    var	parseDate = d3.time.format("%d-%b-%y");
+                    var	x = d3.time.scale().range([0, width]);
+                    var	y = d3.scale.linear().range([height, 0]);
+                    var	xAxis = d3.svg.axis().scale(x)
+                        .orient("bottom").ticks(5);
+
+                    var	yAxis = d3.svg.axis().scale(y)
+                        .orient("left").ticks(5);
+                    var	valueline = d3.svg.line()
+                        .x(function(d) { return x(d.x); })
+                        .y(function(d) { return y(d.y); });
+                    var	svg = d3.select("#viz")
+                        .append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                    data.forEach(function(d) {
+                        let date = d.date.date;
+                        d.x = new Date(date.year, date.month, date.day);
+                        d.y = +d[col];
+                    });
+
+                    x.domain(d3.extent(data, function(d) { return d.x; }));
+                    y.domain([0, d3.max(data, function(d) { return d.y; })]);
+                    svg.append("path")
+                        .attr("class", "line")
+                        .attr("d", valueline(data));
+                    svg.append("g")
+                        .attr("class", "x axis")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(xAxis);
+
+                    svg.append("g")
+                        .attr("class", "y axis")
+                        .call(yAxis);
+                }
+
+
+                window.onload=function() {
+                    let col = get_URL_param("col");
+                    let data = get_data(get_URL_param("source"));
+                    document.getElementById("viz").innerHTML += "<h1>Visualization of " + col + "</h1>";
+                    graph(data, col);
+                }
+            </script>
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
+

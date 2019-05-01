@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:itrust="/WEB-INF/tags.tld">
+<h:form id="basic_ov_form" enctype="multipart/form-data">
+
+    <!--TODO Connect these all to the back end-->
+
+    <div class="form-group" style="display: none;">
+        <h:outputLabel for="obstetricOfficeVisitID">Fetus ID:</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="obstetricOfficeVisitID" value="#{ultrasound_form.obstetricOfficeVisitID}"
+                     class="form-control inline" label="obstetricOfficeVisitID" name="obstetricOfficeVisitID" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Crown rump length (CRL)</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="CRL" value="#{ultrasound_form.crl}"
+                     class="form-control inline" label="Crown rump length" name="crownRumpLength" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Biparietal diameter (BPD)</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="BPD" value="#{ultrasound_form.bpd}"
+                     class="form-control inline" label="Biparietal diameter" name="biparietalDiameter" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Head circumference (HC)</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="HC" value="#{ultrasound_form.hc}"
+                     class="form-control inline" label="Head circumference" name="headCircumference" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Femur length (FL)</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="FL" value="#{ultrasound_form.fl}"
+                     class="form-control inline" label="Femur length" name="femurLength" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Occipitofrontal diameter (OFD)</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="OFD" value="#{ultrasound_form.ofd}"
+                     class="form-control inline" label="Occipitofrontal diameter" name="occipitofrontalDiameter" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Abdominal circumference (AC)</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="AC" value="#{ultrasound_form.ac}"
+                     class="form-control inline" label="Abdominal circumference" name="abdominalCircumference" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Humerus length (HL)</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="HL" value="#{ultrasound_form.hl}"
+                     class="form-control inline" label="Humerus length" name="humerusLength" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Estimated fetal weight (EFW)</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="EFW" value="#{ultrasound_form.efw}"
+                     class="form-control inline" label="Estimated fetal weight" name="estimatedFetalWeight" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="obstetricOfficeVisitID">Ultrasound Image</h:outputLabel>
+        <h:inputFile  value="#{ultrasound_form.img}"
+                     class="form-control inline" label="Ultrasound Image" name="image" required="true">
+        </h:inputFile>
+    </div>
+
+	<div class="form-group  form-button-group">
+		<h:commandButton id="submitVisitButton" value="Save"
+			action="#{ultrasound_form.submit}" />
+		<h:commandButton id="cancelVisitButton" value="Cancel"
+			action="#{navigation_controller.ultrasoundEntry}" immediate="true" />
+	</div>
+</h:form>
+</html>

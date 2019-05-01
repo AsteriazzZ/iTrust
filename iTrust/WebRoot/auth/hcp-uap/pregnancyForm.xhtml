@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:itrust="/WEB-INF/tags.tld">
+<h:form id="basic_pregnancy_form">
+    <div class="form-group">
+        <h:outputLabel for="pregnancyYear">Conception Year</h:outputLabel>
+        <h:inputText id="pregnancyYear" value="#{pregnancy_form.conceptionYear}"
+                     class="form-control inline" label="Conception Year" name="conceptionYear" required="true">
+        </h:inputText>
+        <h:message for="pregnancyYear" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="pregnancyWeeks">Weeks Pregnant:</h:outputLabel>
+        <h:inputText type="range" min="0" max="100" id="pregnancyWeeks" value="#{pregnancy_form.weeksPregnant}"
+                     class="form-control inline" label="Weeks Pregnant" name="weeksPregnant" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="pregnancyLaborHours">Labor Hours:</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="pregnancyLaborHours" value="#{pregnancy_form.laborHours}"
+                     class="form-control inline" label="Labor Hours" name="laborHours" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="pregnancyWeightGain">Weight Gain:</h:outputLabel>
+        <h:inputText type="range" min="0" max="1000" id="pregnancyWeightGain" value="#{pregnancy_form.weightGain}"
+                     class="form-control inline" label="Weight Gain" name="weightGain" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="pregnancyDeliveryType">Delivery Type:</h:outputLabel>
+        <h:selectOneMenu id="pregnancyDeliveryType"
+                         value="#{pregnancy_form.deliveryType}" class="selectpicker" required="true">
+            <f:selectItem itemValue = "Vaginal Delivery" itemLabel = "Vaginal Delivery" />
+            <f:selectItem itemValue = "Vaginal Delivery Vacuum Assist" itemLabel = "Vaginal Delivery Vacuum Assist" />
+            <f:selectItem itemValue = "Vaginal Delivery Forceps Assist" itemLabel = "Vaginal Delivery Forceps Assist" />
+            <f:selectItem itemValue = "Caesarean Section" itemLabel = "Caesarean Section" />
+            <f:selectItem itemValue = "Miscarriage" itemLabel = "Miscarriage" />
+        </h:selectOneMenu>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="pregnancyNumberOfChildren">Number of Children:</h:outputLabel>
+        <h:inputText type="range" min="0" max="15" id="pregnancyNumberOfChildren" value="#{pregnancy_form.numberOfChildren}"
+                     class="form-control inline" label="Number Of Children" name="numberOfChildren" required="true">
+        </h:inputText>
+    </div>
+
+    <div class="form-group  form-button-group">
+        <h:commandButton id="submitPregnancyButton" value="Save"
+                         action="#{pregnancy_form.submit}" />
+        <h:commandButton id="cancelPregnancyButton" value="Cancel"
+                         action="#{navigation_controller.obsOfficeVisit}" immediate="true" />
+    </div>
+</h:form>
+</html>

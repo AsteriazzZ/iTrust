@@ -1,0 +1,75 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"-->
+        <!--"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+      <!--xmlns:ui="http://java.sun.com/jsf/facelets"-->
+      <!--xmlns:h="http://java.sun.com/jsf/html"-->
+      <!--xmlns:c="http://java.sun.com/jsp/jstl/core"-->
+      <!--xmlns:f="http://java.sun.com/jsf/core"-->
+      <!--xmlns:itrust="/WEB-INF/tags.tld">-->
+<!--<f:view beforePhase="#{navigation_controller.redirectIfInvalidPatient()}" />-->
+<!--<h:body>-->
+    <!--<ui:composition template = "/iTrust_template.xhtml">-->
+        <!--<ui:define name = "pageTitle">Obs Office Visit</ui:define>-->
+        <!--<ui:define name  = "leftMenu">-->
+            <!--<ui:include src="/auth/hcp/menu.xhtml"/>-->
+        <!--</ui:define>-->
+        <!--<ui:define name="mainContent">-->
+            <!--<itrust:patientNav thisTitle="Obs Office Visit" />-->
+            <!--<div align="center">-->
+                <!--<br />-->
+                <!--<h:message for=""/>-->
+            <!--</div>-->
+            <!--<c:choose>-->
+                <!--<c:when test="#{obstetrics_office_visit_controller.CurrentPatientHasVisited()}">-->
+                    <!--<div align="center">-->
+                        <!--<br />-->
+                        <!--<br />-->
+                        <!--<h2 style="font-size: 175%; font-weight: bold;">Select a previous ultrasound to view</h2>-->
+                        <!--<h:dataTable id="previousVisits" styleClass="fTable" value="#{obstetrics_office_visit_controller.getObstetricsOfficeVisitsForCurrentPatient()}"-->
+                                     <!--var="oov"  border="1">-->
+                            <!--<br/>-->
+                            <!--&lt;!&ndash;<h:column>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<f:facet name="header">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<h:outputText value="Click the Link"/>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</f:facet>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<h:link outcome="viewUltrasoundRecord" value="Select">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<f:param name="ultrasoundID" value="#{ov.ultrasoundID}" />&ndash;&gt;-->
+                                <!--&lt;!&ndash;</h:link>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</h:column>&ndash;&gt;-->
+                            <!--<h:column>-->
+                                <!--<f:facet name="header">-->
+                                    <!--<h:outputText value="Visit ID"/>-->
+                                <!--</f:facet>-->
+                                <!--<h:outputText value="#{oov.visitID}">-->
+
+                                <!--</h:outputText>-->
+                            <!--</h:column>-->
+
+                        <!--</h:dataTable>-->
+
+                    <!--</div>-->
+                <!--</c:when>-->
+            <!--</c:choose>-->
+            <!--<br />-->
+            <!--<br />-->
+            <!--<div align="center">-->
+                <!--<input type="button" onclick="JavaScript: window.location.href = 'createUltrasound.xhtml'" value="Click Here to Add an Ultrasound" />-->
+            <!--</div>-->
+            <!--<br />-->
+        <!--</ui:define>-->
+
+
+        <!--<ui:define name="pageScripts">-->
+            <!--<script>-->
+                <!--$(function(){-->
+                    <!--window.sessionStorage.removeItem("currentTabId");-->
+                <!--});-->
+                <!--// document.getElementById("ItemPreview").src = "data:image/png;base64," + #{u.crl};-->
+            <!--</script>-->
+        <!--</ui:define>-->
+    <!--</ui:composition>-->
+
+
+<!--</h:body>-->
+
+<!--</html>-->

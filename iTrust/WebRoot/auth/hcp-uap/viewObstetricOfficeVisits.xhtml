@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:itrust="/WEB-INF/tags.tld">
+<f:view beforePhase="#{navigation_controller.redirectIfInvalidPatient()}" />
+<h:body>
+    <ui:composition template = "/iTrust_template.xhtml">
+        <ui:define name = "pageTitle">Document Obstetric Office Visit</ui:define>
+        <ui:define name  = "leftMenu">
+            <ui:include src="/auth/hcp/menu.xhtml"/>
+        </ui:define>
+        <ui:define name="mainContent">
+            <itrust:patientNav thisTitle="Records" />
+            <div align="center">
+                <br />
+                <h:message for=""/>
+            </div>
+            <c:choose>
+               <c:when test="#{obstetric_visit_controller.CurrentPatientHasObstetricVisit()}" >
+                   <c:choose>
+                       <c:when test="#{obstetrics_office_visit_controller.CurrentPatientNeedsRHShot()}">
+                           <h4 align="center" style="color: red;">Patient should be given an RH immune globulin shot if they have not already gotten one.</h4>
+                       </c:when>
+                   </c:choose>
+               </c:when>
+            </c:choose>
+
+            <c:choose>
+
+                    <c:when test="#{obstetric_visit_controller.CurrentPatientHasObstetricVisit()}">
+                        <c:choose>
+                        <c:when test="#{obstetrics_office_visit_controller.CurrentPatientHasVisited()}">
+                            <div align="center">
+                                <br />
+                                <br />
+                                <h2 style="font-size: 175%; font-weight: bold;">Select a previous obstetrics office visit to view</h2>
+                                <h:dataTable id="previousVisits" styleClass="fTable" value="#{obstetrics_office_visit_controller.getObstetricsOfficeVisitsForCurrentPatient()}"
+                                             var="ov"  border="1">
+                                    <br/>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Click the Link"/>
+                                        </f:facet>
+                                        <h:link outcome="viewObstetricOfficeVisitRecord" value="Select">
+                                            <f:param name="visitID" value="#{ov.visitID}" />
+                                        </h:link>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Date"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ov.date}">
+                                            <f:converter converterId="localDateTimeConverter"/>
+                                        </h:outputText>
+                                    </h:column>
+
+                                </h:dataTable>
+                            </div>
+                        </c:when>
+                            <c:otherwise>
+                                <h2 style="font-size: 175%; font-weight: bold;">No previous obstetric office visits!</h2>
+                            </c:otherwise>
+                        </c:choose>
+                        <div align="center">
+                            <input type="button" onclick="JavaScript: window.location.href = 'obstetricsHCPCheckToCreateObstetricOfficeVisit.jsp'" value="Click Here to add an obstetric office visit" />
+                        </div>
+
+                    </c:when>
+                    <c:otherwise>
+                        <h4>Please Create an Obstetric Initialization before creating an Obstetric Office Visit</h4>
+                        <input type="button" onclick="JavaScript: window.location.href = 'obstetricsPatientEligibilityCheck.jsp'" value="Click Here to initialize obstetrics" />
+
+                    </c:otherwise>
+
+                <br />
+
+            </c:choose>
+            <br />
+
+            <c:choose>
+                <c:when test="#{obstetric_visit_controller.CurrentPatientHasObstetricVisit()}">
+                    <div align="center">
+                        <h:outputLabel for="weeksPregnant">Number of Weeks Pregnant:</h:outputLabel>
+                        <br />
+
+                        <h:outputText type="range" min="0" max="1000" id="weeksPregnant" value="#{obstetric_visit_controller.getObstetricVisitsForCurrentPatient().get(0).weeksPregnant}"
+                                 name="Weeks Pregnant" >
+                        </h:outputText>
+                        <br />
+
+                        <!--<button id="addToCalendar" >Add Next Obstetric Office Visit to Calendar</button>-->
+                        <br/>
+                        <h:form>
+                            <div id="addToCalendar">
+                                <h:commandLink class="btn btn-default" action="#{obstetrics_office_visit_controller.scheduleNextVisit()}" value="Schedule Next Appointment and Add to Calendar">
+                                    <f:param name="weeksPregnant" value="#{obstetric_visit_controller.getObstetricVisitsForCurrentPatient().get(0).weeksPregnant}" />
+                                    <f:param name="currentVisitID" value="#{obstetric_visit_controller.getObstetricVisitsForCurrentPatient().get(0).visitID}" />
+                                </h:commandLink>
+                            </div>
+
+                        </h:form>
+                        <br/>
+
+                    </div>
+                </c:when>
+
+            </c:choose>
+
+        </ui:define>
+
+
+        <ui:define name="pageScripts">
+            <script type="text/javascript">
+                // <![CDATA[
+
+                document.getElementById("addToCalendar").onclick = function () {
+                    // location.href = url;
+                    var days = ["SU", "MO", "TU", "WE", "THU", "FR", "SA"];
+                    var today = new Date();
+                    var byday="";
+                    var dd;
+                    var mm;
+                    var yyyy;
+                    var calendar_url = "https://www.google.com/calendar/event?action=TEMPLATE"//&dates=20181108T010000Z%2F20181109T010000Z&text=Test&location=Test&details=This%20is%20a%20test";
+                    var weeksPregnant = document.getElementById("weeksPregnant").innerText;
+                    var dates="";
+                    var text = "Obstetric Office Visit";
+                    var recur="RRULE:FREQ=";
+                    var details="";
+                    var location="Please Specify";
+                    if (weeksPregnant >= 0 && weeksPregnant < 14){
+                        //Monthly
+                        today.setMonth(today.getMonth()+1);
+                        if (today.getDay()== 0){
+                            today.setDate(today.getDate() + 1);
+                        }else if(today.getDay()==6) {
+                            today.setDate(today.getDate() + 2);
+                        }
+                        byday = days[today.getDay()];
+
+                        //google cal is not 0 based
+                        today.setMonth(today.getMonth()+1)
+
+                        dd = today.getDate();
+                        mm = today.getMonth();
+                        yyyy = today.getFullYear();
+
+                        recur += "MONTHLY;";
+                        recur += "BYDAY=" + byday;
+
+                    }else if(weeksPregnant >= 14 && weeksPregnant < 29){
+                        //Every 2 weeks
+                        today.setDate(today.getDate()+14);
+                        if (today.getDay()== 0){
+                            today.setDate(today.getDate() + 1);
+                        }else if(today.getDay()==6) {
+                            today.setDate(today.getDate() + 2);
+                        }
+                        byday = days[today.getDay()];
+
+                        today.setMonth(today.getMonth()+1)
+
+                        dd = today.getDate();
+                        mm = today.getMonth();
+                        yyyy = today.getFullYear();
+
+                        recur += "WEEKLY;";
+                        recur += "INTERVAL=2;BYDAY=" + byday;
+
+                    } else if(weeksPregnant >= 29 && weeksPregnant < 40){
+                        //Weekly
+                        today.setDate(today.getDate()+7);
+                        if (today.getDay()== 0){
+                            today.setDate(today.getDate() + 1);
+                        }else if(today.getDay()==6) {
+                            today.setDate(today.getDate() + 2);
+                        }
+                        byday = days[today.getDay()];
+
+                        //google cal is not 0 based
+                        today.setMonth(today.getMonth()+1)
+
+                        dd = today.getDate();
+                        mm = today.getMonth();
+                        yyyy = today.getFullYear();
+
+                        recur += "WEEKLY;";
+                        recur += "BYDAY=" + byday;
+                    } else if(weeksPregnant >=40 && weeksPregnant < 43){
+                        //Every other weekday
+                        today.setDate(today.getDate()+2);
+                        if (today.getDay()== 0){
+                            today.setDate(today.getDate() + 1);
+                        }else if(today.getDay()==6) {
+                            today.setDate(today.getDate() + 2);
+                        }
+                        byday = days[today.getDay()];
+
+                        //google cal is not 0 based
+                        today.setMonth(today.getMonth()+1)
+
+                        dd = today.getDate();
+                        mm = today.getMonth();
+                        yyyy = today.getFullYear();
+
+                        recur += "DAILY;INTERVAL=2;BYDAY=MO,TU,WE,TH,FR";
+                        if (weeksPregnant == 42){
+                            text = "Child Birth Visit";
+                        }
+                    }
+                    if (mm < 10){
+                        mm = "0" + mm.toString();
+                    }
+                    if (dd < 10){
+                        dd = "0" + dd.toString();
+                    }
+                    dates = yyyy.toString() + mm.toString() + dd.toString() + "T150000Z" + "/" + yyyy.toString() + mm.toString() + dd.toString() + "T160000Z";
+                    calendar_url += "&dates=" + dates + "&text=" + text + "&location=" + location + "&details=" + details + "&recur=" + recur;
+
+                    window.open(calendar_url, "_blank");
+                };
+                $(function(){
+                    window.sessionStorage.removeItem("currentTabId");
+                });
+                // ]]>
+
+            </script>
+        </ui:define>
+    </ui:composition>
+
+
+</h:body>
+
+</html>

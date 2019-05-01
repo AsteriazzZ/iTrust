@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:itrust="/WEB-INF/tags.tld">
+<h:form id="basic_ov_form">
+    <div class="form-group">
+        <h:outputLabel for="cvdate">Visit Date:</h:outputLabel>
+        <h:inputText id="cvdate" value="#{childbirth_visit_form.visitDate}"
+                     class="form-control inline" label="Date" name="date" required="true">
+            <f:converter converterId="localDateTimeConverter" />
+        </h:inputText>
+        <h:message for="cvdate" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="ovLoc">Location:</h:outputLabel>
+        <h:selectOneMenu id="ovLoc" value="#{childbirth_visit_form.locationID}"
+                         class="selectpicker">
+            <f:selectItems value="#{hospital_controller.getHospitalList()}"
+                           var="h" itemLabel="#{h.hospitalName}" itemValue="#{h.hospitalID}" />
+        </h:selectOneMenu>
+    </div>
+
+    <div class="form-group">
+            <h:outputLabel for="cvPreScheduled">Pre-Scheduled:</h:outputLabel>
+            <h:selectBooleanCheckbox class="form-control inline" id="cvPreScheduled" value="#{childbirth_visit_form.preScheduled}" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="cvDeliveryType">Preferred Delivery Type:</h:outputLabel>
+        <h:selectOneMenu id="cvDeliveryType" value="#{childbirth_visit_form.deliveryType}"
+                         class="selectpicker">
+            <f:selectItems value="#{childbirth_visit_controller.getDeliveryTypes()}"
+                           var="h" itemLabel="#{h}" itemValue="#{h}" />
+        </h:selectOneMenu>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="cvpitocin">Pitocin Administered (mg):</h:outputLabel>
+        <h:inputText id="cvpitocin" value="#{childbirth_visit_form.pitocin}"
+                     class="form-control inline" name="pitocin" >
+        </h:inputText>
+        <h:message for="cvpitocin" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="cvdrug2">Nitrous oxide Administered (mg):</h:outputLabel>
+        <h:inputText id="cvdrug2" value="#{childbirth_visit_form.oxide}"
+                     class="form-control inline" name="oxide" >
+        </h:inputText>
+        <h:message for="cvdrug2" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="cvdrug3">Pethidine Administered (mg):</h:outputLabel>
+        <h:inputText id="cvdrug3" value="#{childbirth_visit_form.pethidine}"
+                     class="form-control inline" name="pethidine" >
+        </h:inputText>
+        <h:message for="cvdrug3" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="cvdrug4">Epidural anaesthesia Administered (mg):</h:outputLabel>
+        <h:inputText id="cvdrug4" value="#{childbirth_visit_form.epidural}"
+                     class="form-control inline" name="epidural" >
+        </h:inputText>
+        <h:message for="cvdrug4" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="cvdrug5">Magnesium sulfate Administered (mg):</h:outputLabel>
+        <h:inputText id="cvdrug5" value="#{childbirth_visit_form.magnesium}"
+                     class="form-control inline" name="magnesium" >
+        </h:inputText>
+        <h:message for="cvdrug5" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="cvdrug6">RH immune globulin Administered (mg):</h:outputLabel>
+        <h:inputText id="cvdrug6" value="#{childbirth_visit_form.rh}"
+                     class="form-control inline" name="rh" >
+        </h:inputText>
+        <h:message for="cvdrug6" class="iTrustError" />
+    </div>
+
+    <div class="form-group  form-button-group">
+        <h:commandButton id="submitVisitButton" value="Save"
+                         action="#{childbirth_visit_form.submit}" />
+        <h:commandButton id="deleteButton" value="Delete"
+                         action="#{childbirth_visit_form.delete}" />
+        <h:commandButton id="cancelVisitButton" value="Cancel"
+                         action="#{navigation_controller.childbirthVisit}" immediate="true" />
+    </div>
+</h:form>
+<br />
+
+<h:form id="child_form">
+
+    <div class="form-group">
+        <h:outputLabel for="name">Birth Name:</h:outputLabel>
+        <h:inputText id="name" value="#{childbirth_form.name}"
+                     class="form-control inline" name="birthName" required="true">
+        </h:inputText>
+        <h:message for="name" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="date2">Birth Date and Time:</h:outputLabel>
+        <h:inputText id="date2" value="#{childbirth_form.date}"
+                     class="form-control inline" label="Date" name="date" required="true">
+            <f:converter converterId="localDateTimeConverter" />
+        </h:inputText>
+        <h:message for="date2" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="sex">Sex:</h:outputLabel>
+        <h:selectOneMenu id="sex" value="#{childbirth_form.sex}"
+                         class="selectpicker" required="true">
+            <f:selectItems value="#{childbirth_controller.getSexes()}"
+                           var="h" itemLabel="#{h}" itemValue="#{h}" />
+        </h:selectOneMenu>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="aDeliveryType">Actual Delivery Type:</h:outputLabel>
+        <h:selectOneMenu id="aDeliveryType" value="#{childbirth_form.deliveryType}"
+                         class="selectpicker" required="true">
+            <f:selectItems value="#{childbirth_controller.getDeliveryTypes()}"
+                           var="h" itemLabel="#{h}" itemValue="#{h}" />
+        </h:selectOneMenu>
+    </div>
+
+    <div class="form-group  form-button-group">
+        <h:commandButton id="addChild" value="Add Child"
+                         action="#{patient_controller.add(childbirth_form.name)}">
+            <f:actionListener binding="#{childbirth_form.submit()}" />
+            <!--<f:param name="parameter" value="123" />-->
+        </h:commandButton>
+    </div>
+</h:form>
+
+<c:choose>
+    <c:when test="#{childbirth_controller.CurrentVisitHasChildbirths()}">
+
+        <div>
+            <br />
+            <br />
+            <h2 style="font-size: 175%; font-weight: bold;">Child Info:</h2>
+            <h:dataTable id="previousVisits" styleClass="fTable" value="#{childbirth_controller.getChildbirthsForCurrentVisit()}"
+                         var="ov"  border="1">
+                <br/>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Click to Edit"/>
+                    </f:facet>
+                    <!--used to link to obstetricsPatientInitialization-->
+                    <h:link outcome="editChildbirthRecord" value="Edit">
+                        <f:param name="birthID" value="#{ov.birthID}" />
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Name"/>
+                    </f:facet>
+                    <h:outputText value="#{ov.name}">
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Birth Date"/>
+                    </f:facet>
+                    <h:outputText value="#{ov.date}">
+                        <f:converter converterId="localDateTimeConverter"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Delivery Type"/>
+                    </f:facet>
+                    <h:outputText value="#{ov.deliveryType}">
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Sex"/>
+                    </f:facet>
+                    <h:outputText value="#{ov.sex}">
+                    </h:outputText>
+                </h:column>
+
+
+            </h:dataTable>
+            <br />
+            <br />
+        </div>
+
+    </c:when>
+    <c:otherwise>
+        <br />
+        <br />
+        <div>
+            <h2 style="font-size: 175%; font-weight: bold;">No Children for this Visit!</h2>
+        </div>
+        <br />
+        <br />
+    </c:otherwise>
+</c:choose>
+
+
+
+
+<ui:define name="pageScripts">
+    <script src="/iTrust/js/officevisitinfo.js"></script>
+</ui:define>
+</html>

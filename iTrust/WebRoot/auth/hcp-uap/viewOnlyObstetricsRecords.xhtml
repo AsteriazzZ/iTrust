@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:itrust="/WEB-INF/tags.tld">
+<f:view beforePhase="#{navigation_controller.redirectIfInvalidPatient()}" />
+<h:body>
+    <ui:composition template = "/iTrust_template.xhtml">
+        <ui:define name = "pageTitle">Document Office Visit</ui:define>
+        <ui:define name  = "leftMenu">
+            <ui:include src="/auth/hcp/menu.xhtml"/>
+        </ui:define>
+        <ui:define name="mainContent">
+            <itrust:patientNav thisTitle="Records" />
+            <div align="center">
+                <br />
+                <h:message for=""/>
+            </div>
+            <c:choose>
+                <c:when test="#{childbirth_visit_controller.CurrentPatientHasChildbirthVisit()}">
+
+                    <div align="center">
+                        <br />
+                        <br />
+                        <h2 style="font-size: 175%; font-weight: bold;">Select a previous obstetrics initialization to view</h2>
+                        <h:dataTable id="previousVisits" styleClass="fTable" value="#{obstetric_visit_controller.getObstetricVisitsForCurrentPatient()}"
+                                     var="ov"  border="1">
+                            <br/>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Click the Link"/>
+                                </f:facet>
+                                <!--used to link to obstetricsPatientInitialization-->
+                                <h:link outcome="viewObstetricsRecord" value="Select">
+                                    <f:param name="visitID" value="#{ov.visitID}" />
+                                </h:link>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Date"/>
+                                </f:facet>
+                                <h:outputText value="#{ov.date}">
+                                    <f:converter converterId="localDateTimeConverter"/>
+                                </h:outputText>
+                            </h:column>
+
+                        </h:dataTable>
+
+                        <h2 style="font-size: 175%; font-weight: bold;">Select a previous pregnancy to view</h2>
+                        <h:dataTable id="previousPregnancies" styleClass="fTable" value="#{pregnancy_controller.getPregnanciesForCurrentPatient()}"
+                                     var="pregnancy"  border="1">
+                            <br/>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Click the Link"/>
+                                </f:facet>
+                                <h:link outcome="viewPregnancyRecord" value="Select">
+                                    <f:param name="pregnancyID" value="#{pregnancy.pregnancyID}" />
+                                </h:link>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Date"/>
+                                </f:facet>
+                                <h:outputText value="#{pregnancy.conceptionYear}"/>
+                            </h:column>
+                        </h:dataTable>
+
+                        <h2 style="font-size: 175%; font-weight: bold;">Select a Childbirth Visit to view</h2>
+                        <h:dataTable id="childbirthVisit" styleClass="fTable" value="#{childbirth_visit_controller.getChildbirthVisitsForCurrentPatient()}"
+                                     var="ov"  border="1">
+                            <br/>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Click the Link"/>
+                                </f:facet>
+                                <!--used to link to childbirthVisitInitialization-->
+                                <h:link outcome="viewChildbirthVisitRecord" value="Select">
+                                    <f:param name="visitID" value="#{ov.visitID}" />
+                                </h:link>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Date"/>
+                                </f:facet>
+                                <h:outputText value="#{ov.visitDate}">
+                                    <f:converter converterId="localDateTimeConverter"/>
+                                </h:outputText>
+                            </h:column>
+
+                        </h:dataTable>
+
+                    </div>
+                    <br />
+                    <br />
+                </c:when>
+                <c:otherwise>
+                    <br />
+                    <br />
+                    <div align="center">
+                        <h2 style="font-size: 175%; font-weight: bold;">No Records for this Patient!</h2>
+                    </div>
+                    <br />
+                    <br />
+                </c:otherwise>
+            </c:choose>
+            <div align="center">
+                <h:link outcome="childBirthInitializationForm" value="Click To Create New Childbirth Visit" />
+            </div>
+        </ui:define>
+
+
+        <ui:define name="pageScripts">
+            <script>
+                $(function(){
+                    window.sessionStorage.removeItem("currentTabId");
+                });
+            </script>
+        </ui:define>
+    </ui:composition>
+
+
+</h:body>
+
+</html>

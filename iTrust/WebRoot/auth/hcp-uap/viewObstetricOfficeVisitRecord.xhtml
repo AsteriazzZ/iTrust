@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<link href="/iTrust/css/obstetricsReport.css" rel="stylesheet" />
+<f:metadata>
+    <f:event type="preRenderView" listener="#{obstetrics_office_visit_controller.logViewObstetricOfficeVisit()}"/>
+</f:metadata>
+<h:body>
+<ui:composition template="/iTrust_template.xhtml">
+    <ui:define name="pageStyle">
+        <link rel="stylesheet" href="/iTrust/css/officevisitinfo.css" />
+        <link rel="stylesheet" href="/iTrust/css/form-layout.css" />
+        <link rel="stylesheet" href="/iTrust/css/tab-layout.css" />
+    </ui:define>
+    <ui:define name="pageTitle">Obstetric Office Visit</ui:define>
+    <ui:define name="leftMenu">
+        <ui:include src="/auth/hcp/menu.xhtml" />
+    </ui:define>
+    <div align="center">
+
+    <ui:define name="mainContent">
+        <h:message for="" id="officevisitinfo-message" class="iTrustError" />
+        <h3>Obstetric Office Visit</h3>
+
+                    <h:panelGrid columns="2" id="basicInfo" styleClass="fTable"
+                                 border="1">
+                        <f:facet name="header">
+                            <h:outputText value="General" />
+                        </f:facet>
+
+                        <h:outputLabel value="Date" />
+                        <h:outputText value="#{obstetrics_office_visit_controller.getSelectedVisit().date}">
+                            <f:converter converterId="localDateTimeConverter" />
+                        </h:outputText>
+
+                        <h:outputLabel value="Weeks Pregnant" />
+                        <h:outputText value="#{obstetrics_office_visit_controller.getSelectedVisit().numOfWeeksPregnant}" />
+
+                        <h:outputLabel value="Weight" />
+                        <h:outputText value="#{obstetrics_office_visit_controller.getSelectedVisit().weight}" />
+
+                        <h:outputLabel value="Blood Pressure" />
+                        <h:outputText value="#{obstetrics_office_visit_controller.getSelectedVisit().bloodPressure}">
+                        </h:outputText>
+
+
+                        <h:outputLabel value="Fetal Heart Rate" />
+                        <h:outputText value="#{obstetrics_office_visit_controller.getSelectedVisit().fetalHeartRate}">
+                        </h:outputText>
+
+                        <h:outputLabel value="Multiple Pregnancy" />
+                        <h:outputText value="#{obstetrics_office_visit_controller.getSelectedVisit().multiplePregnancy}" />
+
+                        <h:outputLabel value="Low Lying Placenta" />
+                        <h:outputText value="#{obstetrics_office_visit_controller.getSelectedVisit().lowLyingPlacenta}" />
+
+                    </h:panelGrid>
+
+        <h3>Ultrasounds</h3>
+        <c:choose>
+            <c:when test="#{ultrasound_controller.currentPatientHasUltrasounds()}">
+                <div align="center">
+                    <br />
+                    <br />
+                    <h2 style="font-size: 175%; font-weight: bold;">Select a previous ultrasound to view</h2>
+                    <h:dataTable id="previousVisits" styleClass="fTable" value="#{ultrasound_controller.getUltrasoundsForCurrentObstetricOfficeVisit()}"
+                                 var="u"  border="1">
+                        <br/>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Click the Link"/>
+                            </f:facet>
+                            <h:link outcome="viewUltrasoundRecord" value="Select">
+                                <f:param name="ultrasoundID" value="#{u.ultrasoundID}" />
+                            </h:link>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ultrasound Image"/>
+                            </f:facet>
+                            <h:graphicImage height="50%" width="50%" id="img" url="data:image/jpeg;base64,#{ultrasound_controller.getUltrasoundImage(u.ultrasoundID)}"></h:graphicImage>
+                        </h:column>
+
+                    </h:dataTable>
+
+                </div>
+            </c:when>
+        </c:choose>
+
+
+        <h:button  value="Click here to edit the obstetric office visit" id="editObstetricRecord"/>
+        <div style="display: none;">
+            <h:button  value="#{obstetrics_office_visit_controller.getSelectedVisit().visitID}" id="obstetricOfficeVisitID"/>
+
+        </div>
+
+        <h:button  value="Click here to add an ultrasound to this obstetric office visit" id="addUltrasound"/>
+        <div style="display: none;">
+            <h:button  value="#{obstetrics_office_visit_controller.getSelectedVisit().visitID}" id="ovID"/>
+
+        </div>
+
+    </ui:define>
+</div>
+
+    <ui:define name="pageScripts">
+        <script src="/iTrust/js/officevisitinfo.js"></script>
+
+        <script>
+            document.getElementById("editObstetricRecord").onclick = function () {
+                var id = document.getElementById("obstetricOfficeVisitID").value;
+                location.href = 'obstetricsHCPCheckToCreateObstetricOfficeVisit.jsp?visitID=' + id;
+            };
+
+            document.getElementById("addUltrasound").onclick = function () {
+                var id = document.getElementById("ovID").value;
+                location.href = '../hcp-uap/ultrasounds/createUltrasound.xhtml?visitID=' + id;
+            };
+
+
+        </script>
+    </ui:define>
+</ui:composition>
+</h:body>
+</html>

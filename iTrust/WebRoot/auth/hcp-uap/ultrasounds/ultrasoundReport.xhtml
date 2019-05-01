@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<link href="/iTrust/css/obstetricsReport.css" rel="stylesheet" />
+
+<div id="obstetrics-report-content">
+	<div align="center">
+		<br />
+		<h2 style="font-size: 175%; font-weight: bold;">Ultrasound Record</h2>
+		<br />
+	</div>
+
+	<div align="center">
+
+		<h:graphicImage height="50%" width="50%" id="img" url="data:image/jpeg;base64,#{ultrasound_controller.getSelectedUltrasoundImage()}"></h:graphicImage>
+		<br/>
+		<br/>
+		<br/>
+
+		<h:panelGrid columns="2" id="basicInfo" styleClass="fTable"
+					border="1">
+					<f:facet name="header">
+						<h:outputText value="General" />
+					</f:facet>
+
+					<h:outputLabel value="Obstetric Office Visit ID" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().obstetricOfficeVisitID}">
+                    </h:outputText>
+
+					<h:outputLabel value="Crown Rump Length" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().crl}">
+					</h:outputText>
+
+					<h:outputLabel value="Biparietal Diameter" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().bpd}">
+					</h:outputText>
+
+					<h:outputLabel value="Head Circumference" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().hc}">
+					</h:outputText>
+
+					<h:outputLabel value="Femur Length" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().fl}">
+					</h:outputText>
+
+					<h:outputLabel value="Occipitofrontal Diameter" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().ofd}">
+					</h:outputText>
+
+					<h:outputLabel value="Abdominal Circumference" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().ac}">
+					</h:outputText>
+
+					<h:outputLabel value="Humerus Length" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().hl}">
+					</h:outputText>
+
+					<h:outputLabel value="Estimated Fetal Weight" />
+					<h:outputText value="#{ultrasound_controller.getSelectedUltrasound().efw}">
+					</h:outputText>
+
+
+				</h:panelGrid>
+				<br />
+		
+	</div>
+</div>
+</html>

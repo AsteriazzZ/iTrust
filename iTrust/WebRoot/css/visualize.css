@@ -1,0 +1,33 @@
+
+
+path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+#viz {
+    align-self: center;
+    align-content: center;
+    text-align: center;
+
+}
+
+#viz svg {
+    margin-top: 50px;
+}
+
+#return {
+    align-self: center;
+    align-content: center;
+    text-align: center;
+    margin-top: 10px;
+}

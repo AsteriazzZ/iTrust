@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:itrust="/WEB-INF/tags.tld">
+<h:form id="basic_ov_form">
+    <div class="form-group">
+        <h:outputLabel for="ovdate">Date:</h:outputLabel>
+        <h:inputText id="ovdate" value="#{obstetrics_office_visit_form.date}"
+                     class="form-control inline" label="Date" name="date" required="true">
+            <f:converter converterId="localDateTimeConverter" />
+        </h:inputText>
+        <h:message for="ovdate" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="ovWeeksPreg">Number of Weeks Pregnant:</h:outputLabel>
+        <h:inputText id="ovWeeksPreg" value="#{obstetrics_office_visit_form.numOfWeeksPregnant}"
+                     class="form-control inline" label="numOfWeeksPregnant" name="numOfWeeksPregnant" required="true">
+        </h:inputText>
+        <h:message for="ovWeeksPreg" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="ovWeight">Weight:</h:outputLabel>
+        <h:inputText id="ovWeight" value="#{obstetrics_office_visit_form.weight}"
+                     class="form-control inline" label="weight" name="weight" required="true">
+        </h:inputText>
+        <h:message for="ovWeight" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="ovBloodPressure">Blood Pressure:</h:outputLabel>
+        <h:inputText id="ovBloodPressure" value="#{obstetrics_office_visit_form.bloodPressure}"
+                     class="form-control inline" label="bloodPressure" name="bloodPressure" required="true">
+        </h:inputText>
+        <h:message for="ovBloodPressure" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="ovFHR">Fetal Heart Rate:</h:outputLabel>
+        <h:inputText id="ovFHR" value="#{obstetrics_office_visit_form.fetalHeartRate}"
+                     class="form-control inline" label="fetalHeartRate" name="fetalHeartRate" required="true">
+        </h:inputText>
+        <h:message for="ovFHR" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="ovMultiPreg">If Multiple Pregnancy:</h:outputLabel>
+        <h:inputText id="ovMultiPreg" value="#{obstetrics_office_visit_form.multiplePregnancy}"
+                     class="form-control inline" label="multiplePregnancy" name="multiplePregnancy" required="true">
+        </h:inputText>
+        <h:message for="ovMultiPreg" class="iTrustError" />
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="ovLyingPlacenta">Low Lying Placenta:</h:outputLabel>
+        <h:selectOneMenu id="ovLyingPlacenta"
+                         value="#{obstetrics_office_visit_form.lowLyingPlacenta}" class="selectpicker">
+            <f:selectItem itemLabel="YES" itemValue="YES" />
+            <f:selectItem itemLabel="NO" itemValue="NO" />
+        </h:selectOneMenu>
+    </div>
+
+    <div class="form-group  form-button-group">
+        <h:commandButton id="submitVisitButton" value="Save"
+                         action="#{obstetrics_office_visit_form.submit}" />
+        <h:commandButton id="cancelVisitButton" value="Cancel"
+                         action="#{navigation_controller.obstetricsOfficeVisit}" immediate="true" />
+    </div>
+
+</h:form>
+</html>
